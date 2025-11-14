@@ -16,6 +16,11 @@ sudo chown -R ${USER}:www-data bootstrap/cache
 php artisan key:generate
 php artisan migrate
 php artisan storage:link
+
+nvm use 24.11
+yarn
+npm install
+npm run build
 ~~~
 
 ### Nginx

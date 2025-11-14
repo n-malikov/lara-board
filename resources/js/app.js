@@ -1,1 +1,3 @@
 import './bootstrap';
+
+import Bootstrap from 'bootstrap/dist/js/bootstrap.bundle.min.js'

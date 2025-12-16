@@ -1,0 +1,12 @@
+services:
+  mysql:
+    image: mysql:8.0
+    volumes:
+      - ./storage/docker/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_USER: dev_db_user
+      MYSQL_PASSWORD: secret
+      MYSQL_DATABASE: lara_board
+    ports:
+      - "33061:3306"

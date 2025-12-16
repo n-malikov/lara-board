@@ -23,6 +23,9 @@ Homestead.json
 Homestead.yaml
 Thumbs.db
 
+/storage/docker/*
+!/storage/docker/.gitkeep
+
 /composer.lock
 /package-lock.json
 /yarn.lock

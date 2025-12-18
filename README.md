@@ -2,7 +2,26 @@
 
 Laravel-powered listings platform for buying and selling items.
 
+
 ### Installation
+
+
+#### docker
+
+~~~
+cp .env.example .env
+docker compose exec php-fpm composer install
+docker compose exec php-fpm php artisan key:generate
+docker compose exec php-fpm php artisan migrate
+docker compose exec php-fpm php artisan storage:link
+docker compose exec node_a yarn
+docker compose exec node_a npm install
+docker compose exec node_a npm run build
+~~~
+[https://localhost:8080/](https://localhost:8080/)
+
+
+#### manual
 
 ~~~
 cp .env.example .env
@@ -11,7 +30,6 @@ composer install
 
 sudo chown -R ${USER}:www-data storage
 sudo chown -R ${USER}:www-data bootstrap/cache
-# chmod -R 775 storage bootstrap/cache
 
 php artisan key:generate
 php artisan migrate
@@ -22,6 +40,7 @@ yarn
 npm install
 npm run build
 ~~~
+
 
 ### Nginx
 

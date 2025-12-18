@@ -32,3 +32,9 @@ services:
       MYSQL_DATABASE: lara_board
     ports:
       - "33061:3306"
+  node_a:
+    image: node:24.11-alpine
+    volumes:
+      - ./:/var/www
+    working_dir: /var/www
+    tty: true

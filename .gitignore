@@ -29,3 +29,7 @@ Thumbs.db
 /composer.lock
 /package-lock.json
 /yarn.lock
+/.yarn
+/.yarnrc.yml
+/.pnp.cjs
+/.pnp.loader.mjs

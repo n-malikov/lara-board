@@ -72,6 +72,10 @@
             </div>
         </nav>
 
+        <div class="container mt-4">
+            @include('layouts.alerts')
+        </div>
+
         <main class="py-4">
             @yield('content')
         </main>

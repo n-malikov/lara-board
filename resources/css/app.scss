@@ -11,3 +11,18 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+.breadcrumb {
+    padding: 0.7rem;
+    border-radius: .375rem;
+    background: rgb(248, 249, 250);
+
+    a {
+        color: rgba(33, 37, 41, .75);
+        text-decoration: none;
+    }
+
+    //.breadcrumb-item + .breadcrumb-item::before {
+    //    content: ">";
+    //}
+}

@@ -73,6 +73,8 @@
         </nav>
 
         <div class="container mt-4">
+            @section('breadcrumb', Breadcrumbs::render())
+            @yield('breadcrumb')
             @include('layouts.alerts')
         </div>
 

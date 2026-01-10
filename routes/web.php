@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -8,4 +9,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('cabinet');
+Route::get('/verify/{token}', [RegisterController::class, 'verify'])->name('register.verify');
+
+Route::get('/cabinet', [App\Http\Controllers\HomeController::class, 'cabinet'])->name('cabinet');

@@ -4,8 +4,12 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -28,7 +32,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/cabinet';
 
     /**
      * Create a new controller instance.
@@ -67,6 +71,61 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'verify_token' => \Illuminate\Support\Str::random(),
+            'status' => User::STATUS_WAIT,
         ]);
     }
+
+
+    /**
+     * Handle a registration request for the application.
+     */
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        $user = $this->create($request->all());
+        //Mail::to($user->email)->send(new \App\Mail\VerifyMail($user));
+        event(new Registered($user));
+
+        //$this->guard()->login($user);
+
+        if ($response = $this->registered($request, $user)) {
+            return $response;
+        }
+
+        return $request->wantsJson()
+            ? new JsonResponse([], 201)
+            : redirect($this->redirectPath());
+    }
+
+
+    /**
+     * The user has been registered.
+     */
+    protected function registered(Request $request, $user)
+    {
+        //Auth::logout();
+        $host = \Illuminate\Support\Facades\Request::root();
+        return redirect()
+            ->route('login')
+            //->with('status', 'Check your email and click on the link to verify.');
+            ->with('status', "Check your email and click on the link to verify. DEV MODE: {$host}/verify/" . $user->verify_token);
+    }
+
+
+    public function verify ($token)
+    {
+        if ( !$user = User::where('verify_token', $token)->first() )
+            return redirect()->route('login')
+                ->with('error', 'Sorry your link cannot be identified.');
+
+        $user->status = User::STATUS_ACTIVE;
+        $user->verify_token = null;
+        $user->save();
+
+        return redirect()->route('login')
+            ->with('success', 'Your e-mail is verified. You can now login.');
+    }
+
 }
